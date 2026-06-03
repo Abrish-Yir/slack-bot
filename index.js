@@ -122,3 +122,20 @@ app.command("/dsb-catfact", async ({ ack, respond }) => {
     await respond({ text: " Failed to fetch a cat fact." });
   }
 });
+(async () => {
+  // Start your Slack app
+  await app.start();
+  console.log("⚡️ Bolt app is running!");
+
+  // 👇 ADD THIS BLOCK RIGHT HERE FOR RENDER:
+  const http = require("http");
+  const server = http.createServer((req, res) => {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("Bot is alive!");
+  });
+  // Render automatically assigns a PORT environment variable
+  const port = process.env.PORT || 3000;
+  server.listen(port, () => {
+    console.log(`Keep-alive server listening on port ${port}`);
+  });
+})();
